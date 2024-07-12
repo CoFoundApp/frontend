@@ -9,11 +9,6 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 const formSchema = z.object({
-    username: z
-        .string()
-        .min(3, {
-            message: "Le nom d'utilisateur est obligatoire."
-        }),
     email: z
         .string()
         .min(3, {
@@ -32,11 +27,10 @@ const formSchema = z.object({
         }),
 })
 
-export default function RegisterPage() {
+export default function LoginPage() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            username: "",
             email: "",
             password: "",
         }
@@ -49,25 +43,12 @@ export default function RegisterPage() {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>S'inscrire</CardTitle>
-                <CardDescription>Remplissez les champs ci-dessous pour vous créer un compte.</CardDescription>
+                <CardTitle>Se connecter</CardTitle>
+                <CardDescription>Remplissez les champs ci-dessous pour vous connecter à votre compte.</CardDescription>
             </CardHeader>
             <CardContent>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                        <FormField
-                            control={form.control}
-                            name="username"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Nom d'utilisateur</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Entrez votre nom d'utilisateur" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
                         <FormField
                             control={form.control}
                             name="email"
@@ -94,7 +75,7 @@ export default function RegisterPage() {
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit" className="w-full">S'inscrire</Button>
+                        <Button type="submit" className="w-full">Se connecter</Button>
                     </form>
                 </Form>
             </CardContent>
