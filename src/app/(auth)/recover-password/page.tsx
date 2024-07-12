@@ -55,7 +55,7 @@ export default function RecoverPasswordPage() {
                             )}
                         />
                         <Button type="submit" className="w-full">Récupérer votre mot de passe</Button>
-                        <p className="text-sm text-center"><Link href="/login" className="text-primary">Retour à la connexion</Link></p>
+                        <p className="text-sm text-center"><Link href="/login" className="text-primary">Retour à la page de connexion</Link></p>
                     </form>
                 </Form>
             </CardContent>
