@@ -18,6 +18,9 @@ const formSchema = z.object({
         .string()
         .min(3, {
             message: "L'adresse e-mail est obligatoire."
+        })
+        .email({
+            message: "Vous devez renseigner une adresse e-mail valide."
         }),
     password: z
         .string()
@@ -72,7 +75,7 @@ export default function LoginPage() {
                                 <FormItem>
                                     <FormLabel>Adresse e-mail</FormLabel>
                                     <FormControl>
-                                        <Input type="email" placeholder="Entrez votre adresse e-mail" {...field} />
+                                        <Input placeholder="Entrez votre adresse e-mail" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -91,7 +94,7 @@ export default function LoginPage() {
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit">S'inscrire</Button>
+                        <Button type="submit" className="w-full">S'inscrire</Button>
                     </form>
                 </Form>
             </CardContent>
