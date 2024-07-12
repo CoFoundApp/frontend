@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
+import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -95,6 +96,7 @@ export default function RegisterPage() {
                             )}
                         />
                         <Button type="submit" className="w-full">S'inscrire</Button>
+                        <p className="text-sm text-center">Vous avez déjà un compte ? <Link href="/login" className="text-primary">Se connecter</Link></p>
                     </form>
                 </Form>
             </CardContent>

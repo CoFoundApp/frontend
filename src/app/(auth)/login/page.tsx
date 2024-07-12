@@ -2,9 +2,10 @@
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
+import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -71,11 +72,15 @@ export default function LoginPage() {
                                     <FormControl>
                                         <Input type="password" placeholder="Entrez votre mot de passe" {...field} />
                                     </FormControl>
+                                    <FormDescription className="text-primary text-right">
+                                        <Link href="/recover-password">Mot de passe oublié ?</Link>
+                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
                         <Button type="submit" className="w-full">Se connecter</Button>
+                        <p className="text-sm text-center">Vous n'avez pas de compte ? <Link href="/register" className="text-primary">S'inscrire</Link></p>
                     </form>
                 </Form>
             </CardContent>

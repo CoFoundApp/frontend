@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
+import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -54,6 +55,7 @@ export default function RecoverPasswordPage() {
                             )}
                         />
                         <Button type="submit" className="w-full">Récupérer votre mot de passe</Button>
+                        <p className="text-sm text-center"><Link href="/login" className="text-primary">Retour à la connexion</Link></p>
                     </form>
                 </Form>
             </CardContent>
