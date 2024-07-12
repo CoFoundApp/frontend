@@ -72,10 +72,10 @@ export default function LoginPage() {
                                     <FormControl>
                                         <Input type="password" placeholder="Entrez votre mot de passe" {...field} />
                                     </FormControl>
+                                    <FormMessage />
                                     <FormDescription className="text-primary text-right">
                                         <Link href="/recover-password">Mot de passe oublié ?</Link>
                                     </FormDescription>
-                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
