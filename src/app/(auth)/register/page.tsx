@@ -4,8 +4,11 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useToast } from "@/components/ui/use-toast"
+import { register } from "@/services/authService"
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -34,6 +37,9 @@ const formSchema = z.object({
 })
 
 export default function RegisterPage() {
+    const { toast } = useToast();
+    const router = useRouter();
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -43,8 +49,20 @@ export default function RegisterPage() {
         }
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        try {
+            await register(values);
+            toast({
+                title: "Inscription réussie !",
+                description: "Un e-mail de confirmation vous a été envoyé.",
+            });
+            router.push("/login");
+        } catch (error: any) {
+            toast({
+                title: "Connexion échouée !",
+                description: error.message || "Une erreur inattendue est survenue.",
+            });
+        }
     }
 
     return (
