@@ -1,11 +1,14 @@
-"use client"
+"use client";
 
 import DashboardLayout from "@/components/dashboard/dashboard-layout";
+import withAuth from "@/middlewares/withAuth";
 
-export default function ApplicationLayout({
+function ApplicationLayout({
     children
 }: {
     children: React.ReactNode;
 }) {
-    return <DashboardLayout>{children}</DashboardLayout>
+    return <DashboardLayout>{children}</DashboardLayout>;
 }
+
+export default withAuth(ApplicationLayout);

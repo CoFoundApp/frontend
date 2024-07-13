@@ -1,10 +1,11 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes"
+import { useTheme } from "next-themes";
+import withGuest from "@/middlewares/withGuest";
 
-export default function AuthLayout({
+function AuthLayout({
     children
 }: {
     children: React.ReactNode
@@ -22,7 +23,7 @@ export default function AuthLayout({
             ) : (
                 <Sun className="h-[1.5rem] w-[1.3rem]" />
             )}
-            <span className="sr-only">Toggle theme</span>
+            <span className="sr-only">Changer le thème</span>
         </Button>
     );
 
@@ -31,5 +32,7 @@ export default function AuthLayout({
             {renderThemeToggleButton()}
             {children}
         </main>
-    )
+    );
 }
+
+export default withGuest(AuthLayout);

@@ -21,9 +21,16 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import useUserStore from "@/stores/useUserStore";
+import { useRouter } from "next/navigation";
 
 export function UserNav() {
-  const { user } = useUserStore();
+  const { user, clearUser } = useUserStore();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    clearUser();
+    router.push('/login');
+  };
 
   return (
     <DropdownMenu>
@@ -71,7 +78,7 @@ export function UserNav() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="hover:cursor-pointer" onClick={() => {}}>
+        <DropdownMenuItem className="hover:cursor-pointer" onClick={handleLogout}>
           <LogOut className="w-4 h-4 mr-3 text-muted-foreground" />
           Se déconnecter
         </DropdownMenuItem>

@@ -3,8 +3,15 @@ import { persist } from 'zustand/middleware';
 
 const useUserStore = create(persist((set) => ({
   user: null,
-  setUser: (user) => set({ user }),
-  logout: () => set({ user: null }),
+  token: null,
+  setUser: ({ token, ...user }) => {
+    set({ user, token });
+    localStorage.setItem('token', token);
+  },
+  clearUser: () => {
+    set({ user: null, token: null });
+    localStorage.removeItem('token');
+  },
 }), {
   name: 'user-store',
   getStorage: () => localStorage
