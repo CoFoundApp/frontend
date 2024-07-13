@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useToast } from "@/components/ui/use-toast"
+import { login } from "@/services/authService"
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
@@ -29,6 +31,8 @@ const formSchema = z.object({
 })
 
 export default function LoginPage() {
+    const { toast } = useToast();
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -37,8 +41,19 @@ export default function LoginPage() {
         }
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        try {
+            await login(values);
+            toast({
+                title: "Connexion réussie !",
+                description: "Vous vous êtes connecté avec succès."
+            });
+        } catch (error: any) {
+            toast({
+                title: "Connexion échouée !",
+                description: error.message || "Une erreur inattendue est survenue",
+            });
+        }
     }
 
     return (
