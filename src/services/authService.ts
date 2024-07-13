@@ -8,6 +8,10 @@ export interface RegisterData {
   email: string;
   password: string;
 }
+
+export interface RecoverPasswordData {
+  email: string;
+}
   
 export async function login(params: LoginData): Promise<{ token: string, user: any }> {
   const loginResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
@@ -54,6 +58,21 @@ export async function register(params: RegisterData): Promise<void> {
   if (!registerResponse.ok) {
     const errorData = await registerResponse.json();
     throw new Error(errorData.error.message || "Erreur lors de l'inscription.");
+  }
+}
+
+export async function recoverPassword(params: RecoverPasswordData): Promise<void> {
+  const recoverResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(params)
+  });
+
+  if (!recoverResponse.ok) {
+    const errorData = await recoverResponse.json();
+    throw new Error(errorData.error.message || "Erreur lors de la réinitialisation du mot de passe.");
   }
 }
   
