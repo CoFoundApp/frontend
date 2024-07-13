@@ -20,8 +20,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import useUserStore from "@/stores/useUserStore";
 
 export function UserNav() {
+  const { user } = useUserStore();
+
   return (
     <DropdownMenu>
       <TooltipProvider disableHoverableContent>
@@ -46,9 +49,9 @@ export function UserNav() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">Ludovic Roux</p>
+            <p className="text-sm font-medium leading-none">{user.data.username}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              roux.ludovic.pro@gmail.com
+              {user.data.email}
             </p>
           </div>
         </DropdownMenuLabel>
