@@ -3,24 +3,40 @@ interface LoginData {
     password: string;
 }
 
-export async function login(params: LoginData): Promise<void> {
+export async function login(params: LoginData, onSuccess: (userData: any) => void): Promise<void> {
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+        const loginResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+            'Content-Type': 'application/json'
             },
             body: JSON.stringify(params)
         });
+    
+        if (loginResponse.ok) {
+            const loginData = await loginResponse.json();
+            const token = loginData.data.accessToken;
 
-        if (response.ok) {
-            const data = await response.json();
-            return data;
+            const userResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+    
+            if (userResponse.ok) {
+                const userData = await userResponse.json();
+                onSuccess({ token, ...userData });
+            } else {
+                const errorData = await userResponse.json();
+                throw new Error(errorData.error.message || 'Erreur lors de la récupération des données utilisateur.');
+            }
         } else {
-            const data = await response.json();
-            throw new Error(data.error.message || 'Erreur lors de la connexion.');
+            const errorData = await loginResponse.json();
+            throw new Error(errorData.error.message || 'Erreur lors de la connexion.');
         }
-    } catch (error) {
+        } catch (error) {
+
         if (error instanceof Error) {
             throw error;
         } else {
@@ -28,3 +44,5 @@ export async function login(params: LoginData): Promise<void> {
         }
     }
 }
+  
+  

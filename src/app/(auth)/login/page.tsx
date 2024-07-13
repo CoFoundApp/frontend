@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import useUserStore from '@/stores/useUserStore'
 
 const formSchema = z.object({
     email: z
@@ -31,6 +32,7 @@ const formSchema = z.object({
 })
 
 export default function LoginPage() {
+    const { setUser } = useUserStore();
     const { toast } = useToast();
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -43,7 +45,7 @@ export default function LoginPage() {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-            await login(values);
+            await login(values, setUser);
             toast({
                 title: "Connexion réussie !",
                 description: "Vous vous êtes connecté avec succès."
