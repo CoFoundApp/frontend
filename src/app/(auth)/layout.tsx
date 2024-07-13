@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
+import useAuth from "@/hooks/use-auth";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes"
 
@@ -9,8 +10,9 @@ export default function AuthLayout({
 }: {
     children: React.ReactNode
 }) {
-    const { setTheme, theme } = useTheme();
+    useAuth(false);
 
+    const { setTheme, theme } = useTheme();
     const renderThemeToggleButton = () => (
         <Button
             variant="ghost"

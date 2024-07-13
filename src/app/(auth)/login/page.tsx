@@ -11,6 +11,7 @@ import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import useUserStore from '@/stores/useUserStore'
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
     email: z
@@ -34,6 +35,7 @@ const formSchema = z.object({
 export default function LoginPage() {
     const { setUser } = useUserStore();
     const { toast } = useToast();
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -50,6 +52,7 @@ export default function LoginPage() {
                 title: "Connexion réussie !",
                 description: "Vous vous êtes connecté avec succès."
             });
+            router.push("/dashboard");
         } catch (error: any) {
             toast({
                 title: "Connexion échouée !",
